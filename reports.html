@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reports & Analytics</title>
+    <link rel="stylesheet" href="assets/css/reports.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <div id="app-layout" class="app-container"></div>
+
+    <div id="main-content-body" style="display: none;">
+        <div class="report-container">
+            
+            <div class="section-title">
+                <h3><i class="fas fa-boxes"></i> বর্তমান স্টক (Inventory)</h3>
+            </div>
+            <div class="summary-grid">
+                <div class="report-card blue">
+                    <div class="icon"><i class="fas fa-cubes"></i></div>
+                    <div class="info"><h4>মোট পণ্য</h4><h2 id="totalStockQty">...</h2></div>
+                </div>
+                <div class="report-card orange">
+                    <div class="icon"><i class="fas fa-wallet"></i></div>
+                    <div class="info"><h4>মোট কেনা দাম</h4><h2 id="totalStockCost">...</h2></div>
+                </div>
+                <div class="report-card green">
+                    <div class="icon"><i class="fas fa-hand-holding-usd"></i></div>
+                    <div class="info"><h4>সম্ভাব্য বিক্রয়</h4><h2 id="totalStockSell">...</h2></div>
+                </div>
+                <div class="report-card purple">
+                    <div class="icon"><i class="fas fa-chart-line"></i></div>
+                    <div class="info"><h4>সম্ভাব্য লাভ</h4><h2 id="totalStockProfit">...</h2></div>
+                </div>
+            </div>
+
+            <hr class="divider">
+
+            <div class="section-title">
+                <h3><i class="fas fa-file-invoice-dollar"></i> বিক্রয় রিপোর্ট (Sales)</h3>
+            </div>
+
+            <div class="filter-toolbar">
+                <button class="filter-btn active" onclick="loadSalesReport('today', this)">আজকের</button>
+                <button class="filter-btn" onclick="loadSalesReport('month', this)">এই মাসের</button>
+                
+                <div class="custom-date-box">
+                    <input type="date" id="startDate">
+                    <span>to</span>
+                    <input type="date" id="endDate">
+                    <button class="btn-go" onclick="loadSalesReport('custom', this)">Go</button>
+                </div>
+            </div>
+
+            <div class="sales-result-box">
+                <div class="s-card clickable" onclick="openDetailsModal()">
+                    <span>মোট বিক্রয় (Sales):</span>
+                    <h3 id="salesTotal">৳ 0.00</h3>
+                </div>
+                
+                <div class="s-card clickable" onclick="openDetailsModal()">
+                    <span>মোট লাভ (Profit):</span>
+                    <h3 id="salesProfit" style="color: green;">৳ 0.00</h3>
+                </div>
+
+                <div class="s-card clickable" onclick="openDetailsModal()">
+                    <span>মোট কেনা খরচ (Cost):</span>
+                    <h3 id="salesCost" style="color: #d63031;">৳ 0.00</h3>
+                </div>
+
+                <div class="s-card clickable" onclick="openDetailsModal()">
+                    <span>ইনভয়েস সংখ্যা:</span>
+                    <h3 id="salesCount">0</h3>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="reportDetailModal" class="modal">
+        <div class="modal-content report-modal-box">
+            <span class="close-modal" onclick="document.getElementById('reportDetailModal').style.display='none'">&times;</span>
+            
+            <div class="modal-header-row">
+                <button id="btnBackToDays" class="btn-back" style="display:none;" onclick="renderDayWiseTable()">
+                    <i class="fas fa-arrow-left"></i> Back
+                </button>
+                <h3 id="reportModalTitle">বিস্তারিত রিপোর্ট</h3>
+            </div>
+
+            <div class="report-table-scroll">
+                <table class="r-table">
+                    <thead id="reportTableHead"></thead>
+                    <tbody id="reportTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div id="receiptModal" class="modal" style="z-index: 1200;">
+        <div class="modal-content receipt-box-wrapper">
+            <div id="receiptContent" class="receipt-content">
+                </div>
+            <div class="receipt-buttons">
+                <button class="btn-print" onclick="printReceipt()">প্রিন্ট করুন</button>
+                <button class="btn-close" onclick="document.getElementById('receiptModal').style.display='none'">বন্ধ করুন</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="firebase/config.js"></script>
+    <script type="module" src="assets/js/reports.js"></script>
+
+</body>
+</html>
