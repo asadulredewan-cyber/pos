@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Manager</title>
+    
+    <link rel="stylesheet" href="assets/css/expenses.css">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <div id="app-layout" class="app-container"></div>
+
+    <div id="main-content-body" style="display: none;">
+        
+        <div class="expense-container">
+            
+            <div class="e-header">
+                <div class="e-search">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="expenseSearchInput" placeholder="খরচের কারণ খুঁজুন...">
+                </div>
+                
+                <div class="header-right">
+                    <button class="btn-add" onclick="openMonthPicker()">
+    📅 Month
+</button>
+
+                    <div class="total-badge">
+                        মোট খরচ: <span id="totalExpenseDisplay">0.00</span>
+                    </div>
+                    <button class="btn-add" onclick="openExpenseModal()">
+                        <i class="fas fa-plus-circle"></i> নতুন খরচ
+                    </button>
+                </div>
+            </div>
+
+            <div class="e-table-wrap">
+                <table class="e-table">
+                    <thead>
+                        <tr>
+                            <th>তারিখ</th>
+                            <th>খরচের খাত (Category)</th>
+                            <th>বিবরণ (Note)</th>
+                            <th>পরিমাণ (Amount)</th>
+                            <th>Added By</th>
+                            <th>অ্যাকশন</th>
+                        </tr>
+                    </thead>
+                    <tbody id="expenseTableBody">
+                        </tbody>
+                </table>
+                <p id="loadingText" style="text-align: center; margin-top: 20px;">লোডিং...</p>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="expenseModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeExpenseModal()">&times;</span>
+            <h3 id="modalTitle">খরচ যুক্ত করুন</h3>
+            
+            <form id="expenseForm">
+                <input type="hidden" id="editExpenseId">
+
+                <div class="form-group">
+                    <label>তারিখ</label>
+                    <input type="date" id="eDate" required>
+                </div>
+
+                <div class="form-group">
+                    <label>খরচের খাত (Category)</label>
+                    <select id="eCategory">
+                        <option value="Shop Rent">দোকান ভাড়া</option>
+                        <option value="Electricity Bill">বিদ্যুৎ বিল</option>
+                        <option value="Salary">কর্মচারী বেতন</option>
+                        <option value="Transportation">যাতায়াত খরচ</option>
+                        <option value="Tea/Snacks">চা/নাস্তা</option>
+                        <option value="Others">অন্যান্য</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>বিবরণ (Note)</label>
+                    <input type="text" id="eNote" placeholder="বিস্তারিত লিখুন (ঐচ্ছিক)">
+                </div>
+
+                <div class="form-group">
+                    <label>টাকার পরিমাণ <span style="color:red">*</span></label>
+                    <input type="number" id="eAmount" required placeholder="0.00">
+                </div>
+
+                <button type="submit" class="btn-save">সংরক্ষণ করুন</button>
+            </form>
+        </div>
+    </div>
+
+<div id="monthPickerModal" class="modal">
+  <div class="modal-content">
+    <span class="close-modal" onclick="closeMonthPicker()">&times;</span>
+    <h3 style="margin-bottom:15px;">📅 মাস নির্বাচন করুন</h3>
+
+    <div id="monthList" class="month-list"></div>
+  </div>
+</div>
+
+
+
+
+
+    <script type="module" src="firebase/config.js"></script>
+    <script type="module" src="assets/js/expenses.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products List</title>
+    
+    <link rel="stylesheet" href="assets/css/dashboard.css">
+    <link rel="stylesheet" href="assets/css/products.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <div id="app-layout" class="app-container"></div>
+
+    <div id="main-content-body" style="display: none;">
+        <div class="product-container">
+            
+            <div class="p-header">
+                <div class="p-search">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="productSearchInput" placeholder="নাম বা বারকোড দিয়ে খুঁজুন...">
+                </div>
+                <button class="btn-add" id="btnAddProduct" onclick="openProductModal()">
+                    <i class="fas fa-plus"></i> নতুন পণ্য
+                </button>
+            </div>
+
+            <div class="p-table-wrap">
+                <table class="p-table">
+                    <thead>
+                        <tr>
+                            <th>ছবি</th>
+                            <th>নাম & বারকোড</th> <th>ক্যাটাগরি</th>
+                            <th>কেনা দাম</th>
+                            <th>বিক্রয় মূল্য</th>
+                            <th>স্টক</th>
+                            <th>অ্যাকশন</th>
+                        </tr>
+                    </thead>
+                    <tbody id="productTableBody"></tbody>
+                </table>
+                <p id="loadingText" style="text-align: center; margin-top: 20px;">লোডিং...</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="productModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeProductModal()">&times;</span>
+            <h3 id="modalTitle">পণ্যের তথ্য দিন</h3>
+            
+            <form id="productForm">
+                <input type="hidden" id="editProductId">
+
+                <div class="form-group">
+                    <label>পণ্যের নাম <span style="color:red">*</span></label>
+                    <input type="text" id="pName" required placeholder="পণ্যের নাম লিখুন">
+                </div>
+
+                <div class="form-group">
+                    <label>বারকোড (ঐচ্ছিক)</label>
+                    <input type="text" id="pBarcode" placeholder="বারকোড স্ক্যান করুন বা লিখুন">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>ক্যাটাগরি</label>
+                        <select id="pCategory">
+                            <option value="Grocery">Grocery</option>
+                            <option value="Electronics">Electronics</option>
+                            <option value="Cosmetics">Cosmetics</option>
+                            <option value="Medicine">Medicine</option>
+                            <option value="Others">Others</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>ইউনিট (Unit)</label>
+                        <select id="pUnit">
+                            <option value="pcs">Pcs (পিস)</option>
+                            <option value="kg">Kg (কেজি)</option>
+                            <option value="gm">Gm (গ্রাম)</option>
+                            <option value="ltr">Litre (লিটার)</option>
+                            <option value="box">Box (বক্স)</option>
+                            <option value="doz">Dozen (ডজন)</option>
+                            <option value="pkt">Packet (প্যাকেট)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>স্টক (Qty) <span style="color:red">*</span></label>
+                        <input type="number" id="pStock" required value="0">
+                    </div>
+                    <div class="form-group">
+                        <label>Low Stock Alert</label>
+                        <input type="number" id="pLowAlert" value="5" placeholder="Alert Qty">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>কেনা দাম (Cost) <span style="color:red">*</span></label>
+                        <input type="number" id="pCost" required placeholder="0.00">
+                    </div>
+                    <div class="form-group">
+                        <label>বিক্রয় মূল্য (Sell) <span style="color:red">*</span></label>
+                        <input type="number" id="pPrice" required placeholder="0.00">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>ছবির লিংক (Image URL)</label>
+                    <input type="text" id="pImage" placeholder="https://...">
+                </div>
+
+                <button type="submit" class="btn-save">সংরক্ষণ করুন</button>
+            </form>
+        </div>
+    </div>
+
+    <script type="module" src="firebase/config.js"></script>
+    <script type="module" src="assets/js/products.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,714 @@
+/* ===========================
+   1. GLOBAL RESET & LAYOUT STRUCTURE
+   =========================== */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+body {
+    background-color: #f0f2f5;
+    min-height: 100vh;
+
+    /* 🔥 IMPORTANT FIX */
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+/* ===========================
+   LAYOUT
+   =========================== */
+.app-container {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+}
+
+/* SIDEBAR STYLES */
+.sidebar {
+    width: 260px;
+    background: #0d1b2a;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    transition: left 0.3s ease;
+    /* transition added for smooth mobile slide */
+    flex-shrink: 0;
+    z-index: 100;
+}
+
+.sidebar-header h2 {
+    color: #00a6ff;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.shop-profile-box {
+    background: #1b263b;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 25px;
+    border-left: 4px solid #00a6ff;
+}
+
+.shop-label {
+    font-size: 11px;
+    color: #a0aab5;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.shop-name-display {
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    margin: 0;
+}
+
+.sidebar-select {
+    width: 100%;
+    background: transparent;
+    color: white;
+    border: none;
+    border-bottom: 1px dashed #555;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 5px 0;
+    cursor: pointer;
+    outline: none;
+}
+
+.sidebar-select option {
+    background: #0d1b2a;
+}
+
+/* Menu */
+.menu {
+    list-style: none;
+    flex-grow: 1;
+}
+
+.menu li {
+    margin-bottom: 5px;
+}
+
+.menu li a {
+    display: flex;
+    align-items: center;
+    padding: 12px 15px;
+    color: #cfcfcf;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: 0.3s;
+    font-size: 15px;
+}
+
+.menu li a i {
+    margin-right: 12px;
+    width: 20px;
+    text-align: center;
+}
+
+.menu li.active a,
+.menu li a:hover {
+    background: #00a6ff;
+    color: white;
+}
+
+.user-profile-side {
+    display: flex;
+    align-items: center;
+    padding-top: 15px;
+    border-top: 1px solid #333;
+    margin-top: auto;
+}
+
+.logout-btn {
+    background: #e63946;
+    color: white;
+    border: none;
+    padding: 10px;
+    width: 100%;
+    border-radius: 6px;
+    margin-top: 15px;
+    cursor: pointer;
+}
+
+/* Main Wrapper & Topbar */
+.main-wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.top-bar {
+    background: white;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    z-index: 10;
+}
+
+.page-title {
+    font-size: 22px;
+    font-weight: bold;
+    color: #333;
+    margin-left: 15px;
+}
+
+.top-bar-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.top-user-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.user-name {
+    font-weight: 600;
+    color: #333;
+}
+
+.role-badge {
+    background: #e0f2fe;
+    color: #0284ff;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.content-body {
+    flex: 1;
+    padding: 10px;
+    overflow-y: auto;
+}
+
+/* MOBILE MENU BUTTONS (Laptop: Hidden) */
+.mobile-menu-btn {
+    display: none;
+    /* Desktop default: Hidden */
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: #333;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.close-sidebar-btn {
+    display: none;
+    /* Desktop default: Hidden */
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 30px;
+    color: white;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.sidebar-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 99;
+}
+
+.profile-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 25px;
+
+    /* 🔥 ONLY THIS PART CENTERS IT */
+    max-width: 800px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+.profile-card {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 20px 15px rgba(0, 0, 0, 0.704);
+}
+
+
+
+
+
+/* কাস্টম টোস্ট নোটিফিকেশন স্টাইল *//* ===========================
+    TOAST CONTAINER (CENTERED)
+   =========================== */
+.toast-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Screen er thik majhkane fix rakhe */
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    pointer-events: none; /* Page er onno jaygay click korte badha dibe na */
+}
+
+/* BASE TOAST STYLE */
+.toast {
+    min-width: 320px;
+    background: #0d1b2a;
+    color: white;
+    padding: 15px 25px;
+    border-radius: 10px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    opacity: 0;
+    transform: scale(0.9); /* Dhire dhire boro hoye ashbe */
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    pointer-events: auto;
+    border-left: 6px solid #00a6ff;
+}
+
+.toast.show {
+    opacity: 1;
+    transform: scale(1); /* Centre e thakbe, side e jabe na */
+}
+
+/* SUCCESS & ERROR COLORS */
+.toast.success { border-left-color: #2ecc71; }
+.toast.error { border-left-color: #e63946; }
+
+/* ===========================
+    CONFIRM DELETE TOAST
+   =========================== */
+.toast.confirm-toast {
+    min-width: 420px;
+    background: #0b1a2a;
+    padding: 25px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 20px;
+    border-left: 6px solid #e63946;
+    animation: zoomIn 0.3s forwards;
+}
+
+@keyframes zoomIn {
+    from { opacity: 0; transform: scale(0.8); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.confirm-text {
+    font-size: 17px;
+    font-weight: 500;
+    text-align: left;
+    color: white;
+    line-height: 1.5;
+}
+
+.confirm-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+.confirm-actions button {
+    padding: 8px 18px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+}
+
+.btn-cancel { background: #2b2b2b; color: #ccc; }
+.btn-delete { background: #e63946; color: white; }
+
+@media (max-width: 768px) {
+
+    /* সাইডবার লুকানো */
+    .sidebar {
+        position: fixed;
+        left: -280px;
+        top: 0;
+        height: 100vh;
+        z-index: 100;
+        box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5);
+        transition: left 0.3s ease;
+    }
+
+    .sidebar.active {
+        left: 0;
+    }
+
+    /* বাটনগুলো দেখাও */
+    .mobile-menu-btn {
+        display: block;
+    }
+
+    .close-sidebar-btn {
+        display: block;
+    }
+
+    .sidebar-overlay.active {
+        display: block;
+    }
+
+    .page-title {
+        font-size: 18px;
+    }
+
+    .top-bar {
+        padding: 10px 15px;
+    }
+}
+
+/* ===========================
+   2. USER/PROFILE SPECIFIC STYLES
+   =========================== */
+.main-user-wrapper {
+    /* ✅ FIX: কন্টেন্ট সেন্টারিং */
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 25px;
+    /* ল্যাপটপের জন্য পর্যাপ্ত প্যাডিং */
+}
+
+.section-title {
+    margin-bottom: 25px;
+    color: #333;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 10px;
+}
+
+/* Profile Grid */
+
+
+
+
+@media (max-width: 768px) {
+    .profile-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+
+/* Image & Info */
+.profile-header {
+    text-align: center;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #eee;
+}
+
+.profile-img-wrap {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 15px;
+}
+
+.profile-image {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: #f0f0f0 url('https://placehold.co/120?text=P') center / cover;
+    border: 3px solid #00a6ff;
+}
+
+.upload-btn {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background: #00a6ff;
+    color: white;
+    border: 2px solid white;
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 1;
+}
+
+.profile-details h4 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    color: #555;
+    border-bottom: 1px dashed #eee;
+    padding-bottom: 5px;
+}
+
+.profile-details strong {
+    font-weight: 500;
+    color: #111;
+    display: inline-block;
+    width: 120px;
+}
+
+.role-badge {
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: capitalize;
+    background: #e0f2fe;
+    color: #0284ff;
+    display: inline-block;
+    margin-top: 5px;
+}
+
+/* Password Change Button */
+.btn-primary {
+    background: #00a6ff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.full-width {
+    width: 100%;
+}
+
+/* Form Elements */
+.form-row {
+    display: flex;
+    gap: 15px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    flex: 1;
+}
+
+.form-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    outline: none;
+    font-size: 14px;
+}
+
+.btn-save {
+    width: 100%;
+    background: #0d1b2a;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+    font-size: 15px;
+}
+
+
+/* ===========================
+   3. MANAGEMENT TAB STYLES
+   =========================== */
+.management-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 5px;
+}
+
+.tab-btn {
+    background: #f0f0f0;
+    color: #555;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 6px 6px 0 0;
+    cursor: pointer;
+    font-weight: bold;
+    border-bottom: 3px solid transparent;
+}
+
+.tab-btn.active {
+    background: white;
+    color: #00a6ff;
+    border-bottom: 3px solid #00a6ff;
+}
+
+.tab-content {
+    display: none;
+    padding: 15px 0;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* Table/Header Styles */
+.u-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.u-search {
+    display: flex;
+    align-items: center;
+    background: #f1f5f9;
+    padding: 10px 15px;
+    border-radius: 8px;
+    width: 300px;
+    border: 1px solid transparent;
+}
+
+.u-search input {
+    border: none;
+    background: transparent;
+    outline: none;
+    margin-left: 10px;
+    width: 100%;
+}
+
+.btn-add {
+    background: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.u-table-wrap {
+    overflow-x: auto;
+}
+
+.u-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.u-table th {
+    background: #0d1b2a;
+    color: white;
+    padding: 12px;
+    text-align: left;
+    font-size: 14px;
+}
+
+.u-table td {
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+    color: #333;
+}
+
+/* Role Badge for Table */
+.role-badge-table {
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: bold;
+    text-transform: capitalize;
+}
+
+.role-badge-table.seller {
+    background: #e0f2fe;
+    color: #0284ff;
+}
+
+.role-badge-table.manager {
+    background: #fffbe0;
+    color: #f59e0b;
+}
+
+.role-badge-table.admin {
+    background: #fce7f3;
+    color: #db2777;
+}
+
+/* Action Buttons */
+.btn-action {
+    border: none;
+    padding: 6px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 5px;
+    transition: 0.2s;
+}
+
+.btn-edit {
+    background: #ffc107;
+    color: #333;
+}
+
+.btn-delete {
+    background: #e63946;
+    color: white;
+}
+
+
+/* MODAL STYLES (REQUIRED FOR USER/SHOP/PASSWORD MODAL) */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 5vh auto;
+    padding: 30px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.close-modal {
+    position: absolute;
+    right: 20px;
+    top: 15px;
+    font-size: 28px;
+    color: #888;
+    cursor: pointer;
+}

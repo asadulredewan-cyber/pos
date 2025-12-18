@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POS Sale</title>
+    
+   <link rel="stylesheet" href="assets/css/pos.css">    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <div id="app-layout" class="app-container"></div>
+
+    <div id="main-content-body" style="display: none;">
+        
+        <div id="shopAlert" style="display:none; text-align:center; padding:50px;">
+            <h2 style="color:red;"><i class="fas fa-exclamation-triangle"></i> সতর্কতা</h2>
+            <h3>সেল করার জন্য দয়া করে একটি নির্দিষ্ট দোকান সিলেক্ট করুন।</h3>
+            <p>"All Shops" মোডে স্টক মাইনাস করা সম্ভব নয়।</p>
+        </div>
+
+        <div class="pos-container" id="posContainer">
+            
+            <div class="pos-right"> <div class="product-filter-bar">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="productSearch" placeholder="পণ্যের নাম বা বারকোড স্ক্যান করুন..." autofocus>
+                    </div>
+                </div>
+
+                <div class="product-grid" id="productGrid">
+                    </div>
+            </div>
+
+            <div class="pos-left">
+                <div class="cart-header">
+                    <h3><i class="fas fa-shopping-cart"></i> বর্তমান বিল</h3>
+                    <button class="btn-clear" onclick="clearCart()">Clear</button>
+                </div>
+
+                <div class="cart-table-wrapper">
+                    <table class="cart-table">
+                        <thead>
+                            <tr>
+                                <th>পণ্য</th>
+                                <th>দাম</th>
+                                <th style="width: 90px;">Qty</th>
+                                <th>মোট</th>
+                                <th><i class="fas fa-trash"></i></th>
+                            </tr>
+                        </thead>
+                        <tbody id="cartTableBody"></tbody>
+                    </table>
+                    <div id="emptyCartMsg" class="empty-cart-msg">
+                        কার্ট খালি! <br> বারকোড স্ক্যান করুন বা নাম লিখুন।
+                    </div>
+                </div>
+
+                <div class="cart-footer">
+                    <div class="price-row">
+                        <span>সাব টোটাল:</span>
+                        <span id="subTotalDisplay">0.00</span>
+                    </div>
+                    <div class="price-row">
+                        <span>ভ্যাট (0%):</span>
+                        <span>0.00</span>
+                    </div>
+                    <div class="price-row grand-total">
+                        <span>সর্বমোট (Payable):</span>
+                        <span id="grandTotalDisplay">0.00</span>
+                    </div>
+
+                    <button class="btn-checkout" onclick="openPaymentModal()">
+                        <i class="fas fa-money-bill-wave"></i> পেমেন্ট নিন (F3)
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="paymentModal" class="modal">
+        <div class="modal-content payment-box">
+            <h3 style="margin-bottom: 10px;">পেমেন্ট</h3>
+            <h2 style="color: green; margin-bottom: 20px;">৳ <span id="modalPayableAmount">0.00</span></h2>
+            
+            <div class="form-group" style="position: relative;">
+                <input type="text" id="customerSearchInput" placeholder="কাস্টমার নাম লিখুন (Search)..." oninput="filterCustomers()">
+                <div id="customerDropdown" class="dropdown-list"></div>
+                <input type="hidden" id="selectedCustomerId">
+            </div>
+
+            <div class="form-group">
+                <input type="text" id="customerPhone" placeholder="কাস্টমার নাম্বার (Min 8 digit auto search)">
+            </div>
+
+            <div class="form-group" style="display: flex; align-items: center; gap: 5px;">
+                <input type="number" id="discountPercent" placeholder="ডিসকাউন্ট" value="0" style="flex:1;">
+                <span style="font-weight:bold;">%</span>
+            </div>
+
+            <div style="display:flex; justify-content:space-between; margin: 10px 0; font-size: 14px; color: #555;">
+                <span>পরিশোধযোগ্য:</span>
+                <span style="font-weight:bold; color:black;">৳ <span id="finalPayable">0.00</span></span>
+            </div>
+
+            <div class="form-group">
+                <input type="number" id="cashReceived" placeholder="নগদ টাকা (Cash Received)" autofocus>
+            </div>
+            
+            <div class="form-group">
+                <input type="text" id="changeAmount" placeholder="ফেরত টাকা" readonly style="background:#f9f9f9; color: green; font-weight: bold;">
+            </div>
+
+            <div class="modal-actions">
+                <button class="btn-cancel" onclick="closePaymentModal()">বাতিল</button>
+                <button class="btn-confirm" onclick="processSale()">কনফার্ম</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="receiptModal" class="modal" style="z-index: 1200;">
+        <div class="modal-content receipt-box-wrapper">
+            <div id="receiptContent"></div>
+
+            <div class="receipt-buttons">
+                <button class="btn-print-receipt" onclick="printReceipt()">প্রিন্ট করুন</button>
+                <button class="btn-close-receipt" onclick="closeReceiptModal()">বন্ধ করুন</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="firebase/config.js"></script>
+    <script type="module" src="assets/js/pos.js"></script>
+
+</body>
+</html>
